@@ -152,6 +152,7 @@ public class FileSystemXmlApplicationContext extends AbstractXmlApplicationConte
 	 * @param path path to the resource
 	 * @return Resource handle
 	 * @see org.springframework.web.context.support.XmlWebApplicationContext#getResourceByPath
+	 * 重写了父类DefaultResourceLoader的getResourceByPath方法
 	 */
 	@Override
 	protected Resource getResourceByPath(String path) {

@@ -37,6 +37,11 @@ import org.springframework.lang.Nullable;
  * @see org.springframework.beans.factory.support.RootBeanDefinition
  * @see org.springframework.beans.factory.support.ChildBeanDefinition
  */
+
+/**
+ * 存储配置信息
+ * BeanFactory、BeanDefinition、BeanDefinitionReader完成IOC容器初始化过程
+ */
 public interface BeanDefinition extends AttributeAccessor, BeanMetadataElement {
 
 	/**

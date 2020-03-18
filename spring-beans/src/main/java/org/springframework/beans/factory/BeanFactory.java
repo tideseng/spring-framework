@@ -113,6 +113,15 @@ import org.springframework.lang.Nullable;
  * @see DisposableBean#destroy
  * @see org.springframework.beans.factory.support.RootBeanDefinition#getDestroyMethodName
  */
+
+/**
+ * 定义容器
+ * BeanFactory、BeanDefinition、BeanDefinitionReader完成IOC容器初始化过程
+ * IOC容器初始化三部曲
+ * 		定位：定位配置文件
+ * 		加载：将配置文件加载到内容
+ * 		注册：将加载的内容解析成BeanDefinition，并放入IOC容器
+ */
 public interface BeanFactory {
 
 	/**

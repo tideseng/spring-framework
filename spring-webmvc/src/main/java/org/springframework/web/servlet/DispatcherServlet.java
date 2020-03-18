@@ -479,6 +479,11 @@ public class DispatcherServlet extends FrameworkServlet {
 
 
 	/**
+	 * 定义回调方法的处理逻辑，完成初始化动作
+	 * 实现逻辑：
+	 * 		HttpServletBean中的init方法中定义了钩子方法initServletBean()
+	 * 		FrameworkServlet重写了initServletBean()方法，调用了AbstractApplicationContext的refresh()方法，并触发onRefresh钩子方法
+	 * 		当前类重写onRefresh方法，定义初始化逻辑
 	 * This implementation calls {@link #initStrategies}.
 	 */
 	@Override
