@@ -81,7 +81,7 @@ public class AnnotationScopeMetadataResolver implements ScopeMetadataResolver {
 		if (definition instanceof AnnotatedBeanDefinition) {
 			AnnotatedBeanDefinition annDef = (AnnotatedBeanDefinition) definition;
 			//从注解Bean定义类的属性中查找属性为”Scope”的值，即@Scope注解的值
-			//annDef.getMetadata().getAnnotationAttributes方法将Bean
+			//annDef.getMetadata().getAnnotationAttributes()方法将Bean
 			//中所有的注解和注解的值存放在一个map集合中
 			AnnotationAttributes attributes = AnnotationConfigUtils.attributesFor(
 					annDef.getMetadata(), this.scopeAnnotationType);

@@ -271,7 +271,7 @@ public abstract class AbstractNestablePropertyAccessor extends AbstractPropertyA
 	//实现属性依赖注入功能
 	@SuppressWarnings("unchecked")
 	private void processKeyedProperty(PropertyTokenHolder tokens, PropertyValue pv) {
-		//调用属性的getter(readerMethod)方法，获取属性的值
+		//调用属性的getter方法，获取属性的值
 		Object propValue = getPropertyHoldingValue(tokens);
 		PropertyHandler ph = getLocalPropertyHandler(tokens.actualName);
 		if (ph == null) {
@@ -299,7 +299,7 @@ public abstract class AbstractNestablePropertyAccessor extends AbstractPropertyA
 					Object newArray = Array.newInstance(componentType, arrayIndex + 1);
 					System.arraycopy(propValue, 0, newArray, 0, length);
 					setPropertyValue(tokens.actualName, newArray);
-					//调用属性的getter(readerMethod)方法，获取属性的值
+					//调用属性的getter方法，获取属性的值
 					propValue = getPropertyValue(tokens.actualName);
 				}
 				//将属性的值赋值给数组中的元素
