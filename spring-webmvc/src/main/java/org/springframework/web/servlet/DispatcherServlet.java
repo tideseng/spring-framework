@@ -144,6 +144,13 @@ import java.util.*;
  * @see org.springframework.web.context.ContextLoaderListener
  */
 @SuppressWarnings("serial")
+/**
+ * springmvc的核心servlet，间接继承自HttpServlet，是springmvc的入口
+ * servlet的生命周期
+ * 		init()：初始化方法（入口）
+ * 		service()：处理请求方法
+ * 		destroy()：销毁方法
+ */
 public class DispatcherServlet extends FrameworkServlet {
 
 	/** Well-known name for the MultipartResolver object in the bean factory for this namespace. */
@@ -480,28 +487,28 @@ public class DispatcherServlet extends FrameworkServlet {
 	}
 
 	/**
+	 * 初始化策略，初始化九大组件
 	 * Initialize the strategy objects that this servlet uses.
 	 * <p>May be overridden in subclasses in order to initialize further strategy objects.
 	 */
-	//初始化策略
 	protected void initStrategies(ApplicationContext context) {
-		//多文件上传的组件
+		// 初始化文件上传的组件
 		initMultipartResolver(context);
-		//初始化本地语言环境
+		// 初始化本地语言环境
 		initLocaleResolver(context);
-		//初始化模板处理器
+		// 初始化模板处理器
 		initThemeResolver(context);
-		//handlerMapping
+		// 初始化handlerMapping
 		initHandlerMappings(context);
-		//初始化参数适配器
+		// 初始化参数适配器
 		initHandlerAdapters(context);
-		//初始化异常拦截器
+		// 初始化异常拦截器
 		initHandlerExceptionResolvers(context);
-		//初始化视图预处理器
+		// 初始化视图预处理器
 		initRequestToViewNameTranslator(context);
-		//初始化视图转换器
+		// 初始化视图转换器
 		initViewResolvers(context);
-		//
+		// 初始化flashMapManager
 		initFlashMapManager(context);
 	}
 
