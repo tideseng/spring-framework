@@ -1,0 +1,18 @@
+@startuml
+title DispatcherServlet初始化过程
+
+participant DispatcherServlet
+participant FrameworkServlet
+participant HttpServletBean
+
+DispatcherServlet -> HttpServletBean: init()
+HttpServletBean -> FrameworkServlet: initServletBean()
+FrameworkServlet -> FrameworkServlet: initWebApplicationContext()
+FrameworkServlet -> FrameworkServlet: configureAndRefreshWebApplicationContext(cwac)
+FrameworkServlet -> AbstractApplicationContext: refresh()
+FrameworkServlet -> FrameworkServlet: findWebApplicationContext()
+FrameworkServlet -> FrameworkServlet: createWebApplicationContext(rootContext)
+FrameworkServlet -> DispatcherServlet: onRefresh(wac)
+DispatcherServlet -> DispatcherServlet: initStrategies()
+
+@enduml
