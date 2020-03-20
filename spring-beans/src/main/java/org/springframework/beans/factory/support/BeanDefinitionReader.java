@@ -39,7 +39,7 @@ import org.springframework.lang.Nullable;
  */
 
 /**
- * 读取配置信息
+ * spring配置文件
  * BeanFactory、BeanDefinition、BeanDefinitionReader完成IOC容器初始化过程
  */
 public interface BeanDefinitionReader {

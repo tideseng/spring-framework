@@ -492,12 +492,12 @@ public class DispatcherServlet extends FrameworkServlet {
 	}
 
 	/**
-	 * 初始化策略，初始化九大组件
+	 * 初始化策略，初始化SpringMVC九大组件
 	 * Initialize the strategy objects that this servlet uses.
 	 * <p>May be overridden in subclasses in order to initialize further strategy objects.
 	 */
 	protected void initStrategies(ApplicationContext context) {
-		// 初始化文件上传的组件
+		// 初始化文件上传组件
 		initMultipartResolver(context);
 		// 初始化本地语言环境
 		initLocaleResolver(context);

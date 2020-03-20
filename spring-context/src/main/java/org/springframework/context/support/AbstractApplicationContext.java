@@ -225,11 +225,12 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	}
 
 	/**
+	 * 子类创建时父类调用构造函数
 	 * Create a new AbstractApplicationContext with the given parent context.
 	 * @param parent the parent context
 	 */
 	public AbstractApplicationContext(@Nullable ApplicationContext parent) {
-		this(); // 子类创建时父类被调用，指定调用无参构造器
+		this(); // 创建Spring资源加载器
 		setParent(parent);
 	}
 
@@ -518,6 +519,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 
 	/**
 	 * 模板模式
+	 * IOC容器的启动流程，为IOC容器Bean的生命周期管理提供条件
 	 * @throws BeansException
 	 * @throws IllegalStateException
 	 */
@@ -529,8 +531,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 			prepareRefresh();
 
 			// Tell the subclass to refresh the internal bean factory.
-			//2、告诉子类启动refreshBeanFactory()方法，Bean定义资源文件的载入从
-			//子类的refreshBeanFactory()方法启动
+			//2、告诉子类启动refreshBeanFactory()方法，创建或重启容器并载入Bean配置信息
 			ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();
 
 			// Prepare the bean factory for use in this context.
@@ -547,8 +548,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 				invokeBeanFactoryPostProcessors(beanFactory);
 
 				// Register bean processors that intercept bean creation.
-				//6、为BeanFactory注册BeanPost事件处理器.
-				//BeanPostProcessor是Bean后置处理器，用于监听容器触发的事件
+				//6、为BeanFactory注册BeanPost事件处理器，BeanPostProcessor是Bean后置处理器，用于监听容器触发的事件
 				registerBeanPostProcessors(beanFactory);
 
 				// Initialize message source for this context.
@@ -644,7 +644,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	 * @see #getBeanFactory()
 	 */
 	protected ConfigurableListableBeanFactory obtainFreshBeanFactory() {
-		//这里使用了委派设计模式，父类定义了抽象的refreshBeanFactory()方法，具体实现调用子类容器的refreshBeanFactory()方法
+		// 创建或重启容器并载入Bean配置信息。使用了委派设计模式，抽象方法，子类（AbstractRefreshableApplicationContext）实现
 		refreshBeanFactory();
 		ConfigurableListableBeanFactory beanFactory = getBeanFactory();
 		if (logger.isDebugEnabled()) {

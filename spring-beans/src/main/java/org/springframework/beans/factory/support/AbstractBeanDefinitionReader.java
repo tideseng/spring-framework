@@ -222,6 +222,7 @@ public abstract class AbstractBeanDefinitionReader implements EnvironmentCapable
 			try {
 				//将指定位置的Bean定义资源文件解析为Spring IOC容器封装的资源
 				//加载多个指定位置的Bean定义资源文件
+				// 调用AbstractApplicationContext的getResources方法，调用资源加载器获取要加载的资源
 				Resource[] resources = ((ResourcePatternResolver) resourceLoader).getResources(location);
 				//委派调用其子类XmlBeanDefinitionReader的方法，实现加载功能
 				int loadCount = loadBeanDefinitions(resources);

@@ -105,7 +105,6 @@ public class ClassPathXmlApplicationContext extends AbstractXmlApplicationContex
 	 */
 	public ClassPathXmlApplicationContext(String[] configLocations, @Nullable ApplicationContext parent)
 			throws BeansException {
-
 		this(configLocations, true, parent);
 	}
 
@@ -137,10 +136,10 @@ public class ClassPathXmlApplicationContext extends AbstractXmlApplicationContex
 	public ClassPathXmlApplicationContext(
 			String[] configLocations, boolean refresh, @Nullable ApplicationContext parent)
 			throws BeansException {
-		super(parent); // 调用父类构造器
-		setConfigLocations(configLocations);
+		super(parent); // 调用父类构造器（AbstractApplicationContext）设置容器的资源加载器
+		setConfigLocations(configLocations); // 设置Bean资源的路径
 		if (refresh) {
-			refresh(); // 调用了父类AbstractApplicationContext的refresh()方法
+			refresh(); // 调用父类AbstractApplicationContext的refresh()方法，开始启动IOC容器对Bean定义的载入
 		}
 	}
 

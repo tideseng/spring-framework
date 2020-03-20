@@ -40,7 +40,7 @@ import org.springframework.lang.Nullable;
 
 /**
  * 存储配置信息
- * BeanFactory、BeanDefinition、BeanDefinitionReader完成IOC容器初始化过程
+ * BeanFactory、BeanDefinition、BeanDefinitionReader完成IOC容器定位、加载、注册的初始化过程
  */
 public interface BeanDefinition extends AttributeAccessor, BeanMetadataElement {
 

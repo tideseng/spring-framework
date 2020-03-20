@@ -145,7 +145,6 @@ public class BeanDefinitionReaderUtils {
 	public static void registerBeanDefinition(
 			BeanDefinitionHolder definitionHolder, BeanDefinitionRegistry registry)
 			throws BeanDefinitionStoreException {
-
 		// Register bean definition under primary name.
 		//获取解析的BeanDefinition的名称
 		String beanName = definitionHolder.getBeanName();

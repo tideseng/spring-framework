@@ -115,7 +115,7 @@ import org.springframework.lang.Nullable;
  */
 
 /**
- * 定义容器
+ * 定义了IOC容器的基本行为，不关心Bean的加载
  * BeanFactory、BeanDefinition、BeanDefinitionReader完成IOC容器初始化过程
  * IOC容器初始化三部曲
  * 		定位：定位配置文件
