@@ -1,0 +1,57 @@
+@startuml
+title 基于Xml的IOC容器的初始化过程
+
+participant ClassPathXmlApplicationContext
+participant AbstractXmlApplicationContext
+participant AbstractRefreshableConfigApplicationContext
+participant AbstractRefreshableApplicationContext
+participant AbstractApplicationContext
+
+ClassPathXmlApplicationContext -> AbstractApplicationContext: AbstractApplicationContext(ac) \r 1.进入入口（子类构造方法调用父类构造方法）
+AbstractApplicationContext -> AbstractApplicationContext: getResourcePatternResolver()
+AbstractApplicationContext -> PathMatchingResourcePatternResolver: PathMatchingResourcePatternResolver(resourceLoader) \r 设置Bean资源加载器
+AbstractApplicationContext -> AbstractApplicationContext: setParent(ac)
+ClassPathXmlApplicationContext -> AbstractRefreshableConfigApplicationContext: setConfigLocations(configLocations) \r 2.设置配置路径
+ClassPathXmlApplicationContext -> AbstractApplicationContext: refresh() \r 3.开启IOC容器启动流程
+AbstractApplicationContext -> AbstractApplicationContext: obtainFreshBeanFactory()
+AbstractApplicationContext -> AbstractRefreshableApplicationContext: refreshBeanFactory() \r 4.创建IOC容器
+AbstractRefreshableApplicationContext -> AbstractRefreshableApplicationContext: createBeanFactory
+AbstractRefreshableApplicationContext -> DefaultListableBeanFactory: DefaultListableBeanFactory(parentBeanFactory)
+AbstractRefreshableApplicationContext -> AbstractXmlApplicationContext: loadBeanDefinitions(beanFactory) \r 5.载入配置路径
+AbstractXmlApplicationContext -> XmlBeanDefinitionReader: XmlBeanDefinitionReader(beanFactory)
+AbstractXmlApplicationContext -> AbstractXmlApplicationContext: loadBeanDefinitions(beanDefinitionReader) \r Bean读取器加载Bean配置资源
+AbstractXmlApplicationContext -> ClassPathXmlApplicationContext: getConfigResources()
+AbstractXmlApplicationContext -> AbstractBeanDefinitionReader: loadBeanDefinitions(configLocations)
+AbstractBeanDefinitionReader -> AbstractBeanDefinitionReader: loadBeanDefinitions(location) \r 6.分配路径处理载入策略
+AbstractBeanDefinitionReader -> AbstractBeanDefinitionReader: loadBeanDefinitions(location, actualResources)
+AbstractBeanDefinitionReader -> AbstractBeanDefinitionReader: getResourceLoader() \r 获取资源加载器
+AbstractBeanDefinitionReader -> AbstractApplicationContext: getResources(location) \r 7.解析配置文件路径
+AbstractApplicationContext -> PathMatchingResourcePatternResolver: getResources(locationPattern)
+PathMatchingResourcePatternResolver -> DefaultResourceLoader: getResources(locationPattern)
+AbstractBeanDefinitionReader -> XmlBeanDefinitionReader: loadBeanDefinitions(resource) \r 真正执行加载功能
+XmlBeanDefinitionReader -> XmlBeanDefinitionReader: loadBeanDefinitions(encodedResource)
+XmlBeanDefinitionReader -> XmlBeanDefinitionReader: doLoadBeanDefinitions(inputSource, resource) \r 8.开始读取配置内容
+XmlBeanDefinitionReader -> XmlBeanDefinitionReader: doLoadDocument(inputSource, resource) \r 将Bean配置信息转换为Document对象
+XmlBeanDefinitionReader -> DefaultDocumentLoader: loadDocument(inputSource, entityResolver, errorHandler, validationMode, namespaceAware) \r 9.准备文档对象
+XmlBeanDefinitionReader -> XmlBeanDefinitionReader: registerBeanDefinitions(doc, resource) \r 10.分配解析策略
+XmlBeanDefinitionReader -> XmlBeanDefinitionReader: createBeanDefinitionDocumentReader()
+XmlBeanDefinitionReader -> DefaultBeanDefinitionDocumentReader: registerBeanDefinitions(doc, readerContext)
+DefaultBeanDefinitionDocumentReader -> DefaultBeanDefinitionDocumentReader: doRegisterBeanDefinitions(root) \r 11.将配置载入内存
+DefaultBeanDefinitionDocumentReader -> DefaultBeanDefinitionDocumentReader: createDelegate(readerContext, root, parentDelegate)
+DefaultBeanDefinitionDocumentReader -> BeanDefinitionParserDelegate: initDefaults(root, parentDelegate)
+BeanDefinitionParserDelegate -> BeanDefinitionParserDelegate: populateDefaults(defaults, parentDefaults, root)
+DefaultBeanDefinitionDocumentReader -> DefaultBeanDefinitionDocumentReader: parseBeanDefinitions(root, delegate) \r 解析Bean定义的Document对象
+DefaultBeanDefinitionDocumentReader -> DefaultBeanDefinitionDocumentReader: parseDefaultElement(ele, delegate) \r 使用Spring的Bean规则解析Document元素节点
+DefaultBeanDefinitionDocumentReader -> DefaultBeanDefinitionDocumentReader: processBeanDefinition(ele, delegate)
+DefaultBeanDefinitionDocumentReader -> BeanDefinitionParserDelegate: parseBeanDefinitionElement(ele) \r 12.载入<bean>元素
+BeanDefinitionParserDelegate -> BeanDefinitionParserDelegate: parseBeanDefinitionElement(ele, containingBean)
+BeanDefinitionParserDelegate -> BeanDefinitionParserDelegate: parseBeanDefinitionElement(ele, beanName, containingBean)
+BeanDefinitionParserDelegate -> BeanDefinitionParserDelegate: parsePropertyElements(ele, bd)
+BeanDefinitionParserDelegate -> BeanDefinitionParserDelegate: parsePropertyElement(ele, bd) \r \r 13.载入<property>元素
+BeanDefinitionParserDelegate -> BeanDefinitionParserDelegate: parsePropertyValue(ele, bd, propertyName)
+BeanDefinitionParserDelegate -> BeanDefinitionParserDelegate: parsePropertySubElement(subElement, bd) \r 14.载入<property>的子元素
+BeanDefinitionParserDelegate -> BeanDefinitionParserDelegate: parsePropertySubElement(ele, bd, defaultValueType)
+DefaultBeanDefinitionDocumentReader -> BeanDefinitionReaderUtils: registerBeanDefinition(definitionHolder, registry) \r 15.分配注册策略
+BeanDefinitionReaderUtils -> DefaultListableBeanFactory: registerBeanDefinition(beanName, definitionHolder.getBeanDefinition()) \r 16.向容器注册
+
+@enduml
