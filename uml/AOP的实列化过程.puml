@@ -1,0 +1,23 @@
+@startuml
+
+AbstractAutowireCapableBeanFactory -> AbstractAutowireCapableBeanFactory: doCreateBean(beanName, mbdToUse, args)
+AbstractAutowireCapableBeanFactory -> AbstractAutowireCapableBeanFactory: initializeBean(beanName, exposedObject, mbd) \r 1.入口方法
+AbstractAutowireCapableBeanFactory -> AbstractAutowireCapableBeanFactory: applyBeanPostProcessorsAfterInitialization(wrappedBean, beanName)
+AbstractAutowireCapableBeanFactory -> AbstractAutoProxyCreator: postProcessAfterInitialization(result, beanName)
+AbstractAutoProxyCreator -> AbstractAutoProxyCreator: wrapIfNecessary(bean, beanName, cacheKey) \r 2.选择代理策略
+AbstractAutoProxyCreator -> AbstractAdvisorAutoProxyCreator: getAdvicesAndAdvisorsForBean(beanClass, beanName, targetSource)
+AbstractAdvisorAutoProxyCreator -> AbstractAdvisorAutoProxyCreator: findEligibleAdvisors(beanClass, beanName)
+AbstractAdvisorAutoProxyCreator -> AbstractAdvisorAutoProxyCreator: sortAdvisors(eligibleAdvisors)
+AbstractAdvisorAutoProxyCreator -> AnnotationAwareOrderComparator: AnnotationAwareOrderComparator.sort(advisors)
+
+AbstractAutoProxyCreator -> AbstractAutoProxyCreator: createProxy(beanClass, beanName, specificInterceptors, targetSource)
+AbstractAutoProxyCreator -> ProxyFactory: getProxy(classLoader)
+ProxyFactory -> ProxyCreatorSupport: createAopProxy()
+ProxyCreatorSupport -> DefaultAopProxyFactory: createAopProxy(advisedSupport) \r 最终选择代理策略
+JdkDynamicAopProxy -> JdkDynamicAopProxy: invoke(proxy, method, args) \r 3.调用代理方法
+JdkDynamicAopProxy -> AdvisedSupport: getInterceptorsAndDynamicInterceptionAdvice(method, targetClass)
+AdvisedSupport -> DefaultAdvisorChainFactory: getInterceptorsAndDynamicInterceptionAdvice(advised, method, targetClass) \r 4.触发通知
+JdkDynamicAopProxy -> ReflectiveMethodInvocation: proceed()
+ReflectiveMethodInvocation -> MethodInterceptor: invoke(methodInvocation)
+
+@enduml
