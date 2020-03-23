@@ -41,6 +41,10 @@ import java.security.PrivilegedExceptionAction;
  * @author Juergen Hoeller
  * @since 1.1
  */
+
+/**
+ * 实列化策略
+ */
 public class SimpleInstantiationStrategy implements InstantiationStrategy {
 
 	private static final ThreadLocal<Method> currentlyInvokedFactoryMethod = new ThreadLocal<>();

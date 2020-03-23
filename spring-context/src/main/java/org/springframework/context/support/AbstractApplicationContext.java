@@ -568,7 +568,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 				registerListeners();
 
 				// Instantiate all remaining (non-lazy-init) singletons.
-				//11、初始化所有剩余的单例Bean
+				//11、初始化所有剩余的(lazy-init属性为false)单例Bean
 				finishBeanFactoryInitialization(beanFactory);
 
 				// Last step: publish corresponding event.
@@ -865,7 +865,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	 * Finish the initialization of this context's bean factory,
 	 * initializing all remaining singleton beans.
 	 */
-	//对配置了lazy-init属性的Bean进行预实例化处理
+	//对配置了lazy-init属性为false的Bean进行预实例化处理
 	protected void finishBeanFactoryInitialization(ConfigurableListableBeanFactory beanFactory) {
 		// Initialize conversion service for this context.
 		//这是Spring3以后新加的代码，为容器指定一个转换服务(ConversionService)

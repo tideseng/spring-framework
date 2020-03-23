@@ -121,6 +121,9 @@ import org.springframework.lang.Nullable;
  * 		定位：定位配置文件
  * 		加载：将配置文件加载到内容
  * 		注册：将加载的内容解析成BeanDefinition，并放入IOC容器
+ * BeanFactory和FactoryBean
+ * 		BeanFactory是Bean的工厂，是Spring容器的顶层接口/规范。作用是管理Bean(实列化、定位、建议依赖等)
+ * 		FactoryBean是工厂的Bean，是Spring容器的实例。作用是产生Bean实例对象
  */
 public interface BeanFactory {
 

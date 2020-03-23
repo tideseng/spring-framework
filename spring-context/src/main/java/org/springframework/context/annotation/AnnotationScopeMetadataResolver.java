@@ -73,8 +73,12 @@ public class AnnotationScopeMetadataResolver implements ScopeMetadataResolver {
 		this.scopeAnnotationType = scopeAnnotationType;
 	}
 
-
-	//解析注解Bean定义类中的作用域元信息
+	/**
+	 * 解析注解Bean定义类中的作用域元信息
+	 * 判断注册的 Bean 是原生类型(prototype)还是单态(singleton)类型
+	 * @param definition the target bean definition
+	 * @return
+	 */
 	@Override
 	public ScopeMetadata resolveScopeMetadata(BeanDefinition definition) {
 		ScopeMetadata metadata = new ScopeMetadata();

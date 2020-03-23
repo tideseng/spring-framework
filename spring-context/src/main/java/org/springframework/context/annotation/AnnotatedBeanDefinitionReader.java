@@ -213,6 +213,10 @@ public class AnnotatedBeanDefinitionReader {
 	 * @param definitionCustomizers one or more callbacks for customizing the
 	 * factory's {@link BeanDefinition}, e.g. setting a lazy-init or primary flag
 	 * @since 5.0
+	 * 1.需要使用注解元数据解析器解析注解 Bean 中关于作用域的配置
+	 * 2.使用 AnnotationConfigUtils 的 processCommonDefinitionAnnotations()方法处理注解 Bean 定义类中通用的注解
+	 * 3.使用 AnnotationConfigUtils 的 applyScopedProxyMode()方法创建对于作用域的代理对象
+	 * 4.通过 BeanDefinitionReaderUtils 向容器注册 Bean
 	 */
 	//Bean定义读取器向容器注册注解Bean定义类
 	<T> void doRegisterBean(Class<T> annotatedClass, @Nullable Supplier<T> instanceSupplier, @Nullable String name,
