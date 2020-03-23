@@ -1,0 +1,14 @@
+@startuml
+
+AnnotationConfigApplicationContext -> AnnotationConfigApplicationContext: AnnotationConfigApplicationContext(annotatedClasses)
+AnnotationConfigApplicationContext -> AnnotationConfigApplicationContext: register(annotatedClasses)
+AnnotationConfigApplicationContext -> AnnotatedBeanDefinitionReader: register(annotatedClasses)
+AnnotatedBeanDefinitionReader -> AnnotatedBeanDefinitionReader: registerBean(annotatedClass)
+AnnotatedBeanDefinitionReader -> AnnotatedBeanDefinitionReader: doRegisterBean(annotatedClass, instanceSupplier, \r name, qualifiers, definitionCustomizers)
+AnnotatedBeanDefinitionReader -> AnnotationScopeMetadataResolver: resolveScopeMetadata(definition)
+AnnotatedBeanDefinitionReader -> AnnotationConfigUtils: processCommonDefinitionAnnotations(annotatedBeanDefinition)
+AnnotatedBeanDefinitionReader -> AnnotationConfigUtils: applyScopedProxyMode(metadata, definition, registry)
+AnnotatedBeanDefinitionReader -> BeanDefinitionReaderUtils: registerBeanDefinition(definitionHolder, registry)
+BeanDefinitionReaderUtils -> DefaultListableBeanFactory: registerBeanDefinition(beanName, beanDefinition)
+
+@enduml

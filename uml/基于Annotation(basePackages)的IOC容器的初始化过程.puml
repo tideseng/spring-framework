@@ -1,0 +1,15 @@
+@startuml
+
+AnnotationConfigApplicationContext -> AnnotationConfigApplicationContext: AnnotationConfigApplicationContext(basePackages)
+AnnotationConfigApplicationContext -> AnnotationConfigApplicationContext: scan(basePackages)
+AnnotationConfigApplicationContext -> ClassPathBeanDefinitionScanner: scan(basePackages)
+ClassPathBeanDefinitionScanner -> ClassPathBeanDefinitionScanner: doScan(basePackages)
+ClassPathBeanDefinitionScanner -> ClassPathScanningCandidateComponentProvider: findCandidateComponents(basePackage)
+ClassPathBeanDefinitionScanner -> AnnotationScopeMetadataResolver: resolveScopeMetadata(definition)
+ClassPathBeanDefinitionScanner -> AnnotationConfigUtils: processCommonDefinitionAnnotations(annotatedBeanDefinition)
+ClassPathBeanDefinitionScanner -> AnnotationConfigUtils: applyScopedProxyMode(metadata, definition, registry)
+ClassPathBeanDefinitionScanner -> ClassPathBeanDefinitionScanner: registerBeanDefinition(definitionHolder, registry)
+ClassPathBeanDefinitionScanner -> BeanDefinitionReaderUtils: registerBeanDefinition(definitionHolder, registry);
+BeanDefinitionReaderUtils -> DefaultListableBeanFactory: registerBeanDefinition(beanName, beanDefinition)
+
+@enduml
