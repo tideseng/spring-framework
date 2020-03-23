@@ -505,11 +505,11 @@ public class DispatcherServlet extends FrameworkServlet {
 		initThemeResolver(context);
 		// 初始化handlerMapping
 		initHandlerMappings(context);
-		// 初始化参数适配器
+		// 初始化handlerAdpater
 		initHandlerAdapters(context);
 		// 初始化异常拦截器
 		initHandlerExceptionResolvers(context);
-		// 初始化视图预处理器
+		// 初始化视图默认处理组件
 		initRequestToViewNameTranslator(context);
 		// 初始化视图转换器
 		initViewResolvers(context);
@@ -1208,6 +1208,7 @@ public class DispatcherServlet extends FrameworkServlet {
 					logger.trace(
 							"Testing handler map [" + hm + "] in DispatcherServlet with name '" + getServletName() + "'");
 				}
+				// 执行器链
 				HandlerExecutionChain handler = hm.getHandler(request);
 				if (handler != null) {
 					return handler;
