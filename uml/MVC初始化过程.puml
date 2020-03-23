@@ -1,0 +1,38 @@
+@startuml
+
+HttpServletBean -> HttpServletBean: init()
+HttpServletBean -> FrameworkServlet: initServletBean()
+FrameworkServlet -> FrameworkServlet: initWebApplicationContext()
+FrameworkServlet -> FrameworkServlet: configureAndRefreshWebApplicationContext(cwac)
+FrameworkServlet -> AbstractApplicationContext: refresh()
+FrameworkServlet -> DispatcherServlet: onRefresh(wac)
+DispatcherServlet -> DispatcherServlet: initStrategies(context)
+DispatcherServlet -> DispatcherServlet: initMultipartResolver(context)
+DispatcherServlet -> DispatcherServlet: initLocaleResolver(context)
+DispatcherServlet -> DispatcherServlet: initThemeResolver(context)
+DispatcherServlet -> DispatcherServlet: initHandlerMappings(context)
+DispatcherServlet -> DispatcherServlet: initHandlerAdapters(context)
+DispatcherServlet -> DispatcherServlet: initHandlerExceptionResolvers(context)
+DispatcherServlet -> DispatcherServlet: initRequestToViewNameTranslator(context)
+DispatcherServlet -> DispatcherServlet: initViewResolvers(context)
+DispatcherServlet -> DispatcherServlet: initFlashMapManager(context)
+
+DispatcherServlet -> DispatcherServlet: doService(request, response)
+DispatcherServlet -> DispatcherServlet: doDispatch(request, response)
+DispatcherServlet -> DispatcherServlet: getHandler(processedRequest)
+DispatcherServlet -> AbstractHandlerMapping: getHandler(request)
+AbstractHandlerMapping -> AbstractHandlerMapping: getHandlerExecutionChain(handler, request)
+DispatcherServlet -> DispatcherServlet: getHandlerAdapter(handler)
+DispatcherServlet -> HandlerExecutionChain: applyPreHandle(processedRequest, response)
+HandlerExecutionChain -> HandlerInterceptor: preHandle(request, response, handler)
+DispatcherServlet -> AbstractHandlerMethodAdapter: handle(request, response, handler)
+AbstractHandlerMethodAdapter -> RequestMappingHandlerAdapter: handleInternal(request, response, handler)
+RequestMappingHandlerAdapter -> RequestMappingHandlerAdapter: invokeHandlerMethod(request, response, handlerMethod)
+RequestMappingHandlerAdapter -> RequestMappingHandlerAdapter: getModelAndView(mavContainer, modelFactory, webRequest)
+DispatcherServlet -> HandlerExecutionChain: applyPostHandle(processedRequest, response, mv)
+DispatcherServlet -> HandlerInterceptor: postHandle(request, response, handler, mv)
+DispatcherServlet -> DispatcherServlet: processDispatchResult(processedRequest, response, mappedHandler, mv, dispatchException)
+DispatcherServlet -> DispatcherServlet: render(mv, request, response);
+
+
+@enduml
