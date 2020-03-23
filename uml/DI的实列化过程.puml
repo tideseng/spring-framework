@@ -1,0 +1,22 @@
+@startuml
+
+BeanFactory -> AbstractBeanFactory: getBean(name) \r 1.获取Bean入口
+AbstractBeanFactory -> AbstractBeanFactory: doGetBean(name, requiredType, args, typeCheckOnly)
+AbstractBeanFactory -> AbstractAutowireCapableBeanFactory: createBean(beanName, mbd, args)
+AbstractAutowireCapableBeanFactory -> AbstractAutowireCapableBeanFactory: doCreateBean(beanName, mbdToUse, args) \r 2.开始实例化
+AbstractAutowireCapableBeanFactory -> AbstractAutowireCapableBeanFactory: createBeanInstance(beanName, mbd, args) \r 3.选择Bean实例化策略
+AbstractAutowireCapableBeanFactory -> AbstractAutowireCapableBeanFactory: instantiateBean(beanName, mbd)
+AbstractAutowireCapableBeanFactory -> SimpleInstantiationStrategy: instantiate(mbd, beanName, parent) \r 4.执行Bean实例化
+AbstractAutowireCapableBeanFactory -> AbstractBeanFactory: initBeanWrapper(bw)
+AbstractAutowireCapableBeanFactory -> AbstractAutowireCapableBeanFactory: populateBean(beanName, mbd, instanceWrapper) \r 5.准备依赖注入
+AbstractAutowireCapableBeanFactory -> AbstractAutowireCapableBeanFactory: applyPropertyValues(beanName, mbd, bw, pvs)
+AbstractAutowireCapableBeanFactory -> BeanDefinitionValueResolver: resolveValueIfNecessary(pv, originalValue) \r 6.解析属性注入规则
+AbstractAutowireCapableBeanFactory -> AbstractPropertyAccessor: setPropertyValues(propertyValues)
+AbstractPropertyAccessor -> AbstractPropertyAccessor: setPropertyValues(propertyValues, ignoreUnknown, ignoreInvalid)
+AbstractPropertyAccessor -> AbstractNestablePropertyAccessor: setPropertyValue(propertyValue)
+AbstractNestablePropertyAccessor -> AbstractNestablePropertyAccessor: setPropertyValue(tokens, pv) \r 7.注入赋值
+AbstractNestablePropertyAccessor -> AbstractNestablePropertyAccessor: processKeyedProperty(tokens, pv)
+AbstractNestablePropertyAccessor -> AbstractNestablePropertyAccessor: processLocalProperty(tokens, pv)
+AbstractNestablePropertyAccessor -> BeanWrapperImpl: setValue(valueToApply) \r BeanPropertyHandler
+
+@enduml
